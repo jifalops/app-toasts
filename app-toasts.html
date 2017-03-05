@@ -1,6 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-styles/color.html">
 <link rel="import" href="app-toast-swipeable.html">
+<link rel="import" href="app-toast.html">
 
 <!--
 `app-toasts`
@@ -13,9 +14,6 @@ Commonly used toasts are themed, swipeable, and actionable.
   <template>
     <style>
       :host {
-        --app-toasts-font: {
-          @apply --paper-font-body2;
-        };
         --app-toasts-success-color:   var(--paper-green-a700);
         --app-toasts-success-bgcolor: var(--paper-green-50);
         --app-toasts-info-color:      var(--paper-blue-a700);
@@ -25,48 +23,32 @@ Commonly used toasts are themed, swipeable, and actionable.
         --app-toasts-error-color:     var(--paper-deep-orange-a700);
         --app-toasts-error-bgcolor:   var(--paper-deep-orange-50);
       }
-      paper-toast {
-        @apply --app-toasts-font;
-      }
-      paper-button {
-        @apply --app-toasts-button;
-      }
       #successToast {
-        --paper-toast-background-color: var(--app-toasts-success-bgcolor);
-        --paper-toast-color: var(--app-toasts-success-color);
-        background-color: var(--app-toasts-success-bgcolor);
-        color: var(--app-toasts-success-color);
-      }
-      #errorToast {
-        --paper-toast-background-color: var(--app-toasts-error-bgcolor);
-        --paper-toast-color: var(--app-toasts-error-color);
-        background-color: var(--app-toasts-error-bgcolor);
-        color: var(--app-toasts-error-color);
+        --app-toast-color: var(--app-toasts-success-color);
+        --app-toast-bgcolor: var(--app-toasts-success-bgcolor);
       }
       #infoToast {
-        --paper-toast-background-color: var(--app-toasts-info-bgcolor);
-        --paper-toast-color: var(--app-toasts-info-color);
-        background-color: var(--app-toasts-info-bgcolor);
-        color: var(--app-toasts-info-color);
+        --app-toast-color: var(--app-toasts-info-color);
+        --app-toast-bgcolor: var(--app-toasts-info-bgcolor);
       }
       #warningToast {
-        --paper-toast-background-color: var(--app-toasts-warning-bgcolor);
-        --paper-toast-color: var(--app-toasts-warning-color);
-        background-color: var(--app-toasts-warning-bgcolor);
-        color: var(--app-toasts-warning-color);
+        --app-toast-color: var(--app-toasts-warning-color);
+        --app-toast-bgcolor: var(--app-toasts-warning-bgcolor);
+      }
+      #errorToast {
+        --app-toast-color: var(--app-toasts-error-color);
+        --app-toast-bgcolor: var(--app-toasts-error-bgcolor);
       }
       #defaultToast {
-        --paper-toast-background-color: var(--app-toasts-default-bgcolor);
-        --paper-toast-color: var(--app-toasts-default-color);
-        background-color: var(--app-toasts-default-bgcolor);
-        color: var(--app-toasts-default-color);
+        --app-toast-color: var(--app-toasts-default-color);
+        --app-toast-bgcolor: var(--app-toasts-default-bgcolor);
       }
     </style>
-    <app-toast-swipeable id="successToast"></app-toast-swipeable>
-    <app-toast-swipeable id="infoToast"></app-toast-swipeable>
-    <app-toast-swipeable id="warningToast"></app-toast-swipeable>
-    <app-toast-swipeable id="errorToast"></app-toast-swipeable>
-    <app-toast-swipeable id="defaultToast"></app-toast-swipeable>
+    <app-toast id="successToast"></app-toast>
+    <app-toast id="infoToast"></app-toast>
+    <app-toast id="warningToast"></app-toast>
+    <app-toast id="errorToast"></app-toast>
+    <app-toast id="defaultToast"></app-toast>
   </template>
   <script>
     Polymer({
@@ -84,11 +66,21 @@ Commonly used toasts are themed, swipeable, and actionable.
       },
 
       showSuccessToast: function(text, properties) {
-        text = text || 'Success';
+        text = text || 'Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success ';
         this.log && console.log('Toast:', text);
         properties = properties || {};
         properties.text = text;
         properties.icon = 'check-circle';
+        properties.actionText = 'Undo';
+        properties.fitBottom = true;
+        properties.duration = 0;
+        properties.onAction = function() {
+          console.log('action!');
+        };
+        properties.showClose = true;
+        properties.onClose = function() {
+          console.log('close!');
+        };
         this.$.successToast.show(properties);
       },
       showInfoToast: function(text, properties) {

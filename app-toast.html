@@ -3,6 +3,7 @@
 <link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="../paper-styles/typography.html">
 <link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../iron-swipeable-container/iron-swipeable-container.html">
 <link rel="import" href="toast-icons.html">
 <!--
 `app-toast`
@@ -25,29 +26,53 @@ A swipeable, actionable, and themable.
         cursor: default;
       }
       paper-toast {
-        color: var(--app-toast-color);
-        --paper-toast-color: var(--app-toast-color);
-        background-color: var(--app-toast-bgcolor);
-        --paper-toast-background-color: var(--app-toast-bgcolor);
+        /*color: var(--app-toast-color);*/
+        /*--paper-toast-color: var(--app-toast-color);*/
+        /*background-color: var(--app-toast-bgcolor);*/
+        /*--paper-toast-background-color: var(--app-toast-bgcolor);*/
         @apply --paper-font-body2;
+        @apply --layout-horizontal;
+        @apply --layout-center;
         @apply --app-toast;
       }
+      paper-toast > span {
+        @apply --layout-flex;
+      }
       paper-button {
+        color: var(--accent-color);
         @apply --app-toast-button;
       }
       #themeIcon {
+        /*--iron-icon-fill-color: var(--app-toast-bgcolor);*/
+        --iron-icon-stroke-color: var(--app-toast-color);
+        margin-right: 4px;
         @apply --app-toast-theme-icon;
       }
       #closeIcon {
+        --iron-icon-height: 14px;
+        --iron-icon-width: 14px;
+        vertical-align: super;
+        margin-left: 2px;
+        padding: 2px;
         @apply --app-toast-close-icon;
       }
     </style>
-    <paper-toast id="toast">
-      <iron-icon id="themeIcon" icon="toast-icons:[[icon]]"></iron-icon>
-      <span>[[text]]</span>
-      <paper-button id="actionButton">[[actionText]]</paper-button>
-      <iron-icon id="closeIcon" icon="toast-icons:close"></iron-icon>
-    </paper-toast>
+    
+    <div id="container">
+      <!--<iron-swipeable-container-->
+        <!--id="swiper"-->
+        <!--disabled="[[disableSwipe]]"-->
+        <!--on-iron-swipe="__onSwiped">-->
+        <paper-toast id="toast">
+          <iron-icon id="themeIcon" icon="toast-icons:[[icon]]"></iron-icon>
+          <span>[[text]]</span>
+          <paper-button id="actionButton" on-tap="_onAction">[[actionText]]</paper-button>
+          <iron-icon id="closeIcon" icon="toast-icons:close" on-tap="_onClose"></iron-icon>
+        </paper-toast>
+      <!--</iron-swipeable-container>-->
+    </div>
+    
+    
   </template>
   <script>
     Polymer({
@@ -76,11 +101,27 @@ A swipeable, actionable, and themable.
         
         fitBottom: {
           type: Boolean,
-          value: false
+          value: false,
+          observer: '_fitBottomChanged'
         },
         
-        onAction: Object,
-        onClose: Object
+        onAction: {
+          type: Object,
+          value: null
+        },
+        
+        onClose: {
+          type: Object,
+          value: null
+        },
+        
+        /**
+         * Whether swiping should be disabled.
+         */
+        disableSwipe: {
+          type: Boolean,
+          value: false
+        }
       },
 
       show: function(properties) {
@@ -93,11 +134,56 @@ A swipeable, actionable, and themable.
           }
         }
         
-        this.$.themeIcon.hidden = !this.icon;
-        this.$.actionButton.hidden = !this.actionText;
-        this.$.closeIcon.hidden = !this.showClose;
+        this.querySelector('#themeIcon').hidden = !this.icon;
+        this.querySelector('#actionButton').hidden = !this.actionText;
+        this.querySelector('#closeIcon').hidden = !this.showClose;
         
-        this.$.toast.show(properties);
+        this.querySelector('#toast').show(properties);
+      },
+      
+      _onAction: function() {
+        this.onAction && this.onAction();
+      },
+      
+      _onClose: function() {
+        this.onClose && this.onClose();
+        this.$.toast.close();
+      },
+      
+      _fitBottomChanged: function(fitBottom) {
+        if (fitBottom) {
+          this.$.toast.classList.add('fit-bottom');
+        } else {
+          this.$.toast.classList.remove('fit-bottom');
+        }
+      },
+      
+      __onSwiped: function(e, data) {
+        // console.log('swiped:', data.target);
+        this.querySelector('#toast').close();
+        // this.querySelector('#swiper').re
+        // Remove the swipeable container,
+        // then add it and its children again.
+        this.$.container.removeChild(this.$.swiper);
+        
+        var swiper = document.createElement('iron-swipeable-container');
+        swiper.id = 'swiper';
+        swiper.disabled = this.disableSwipe; // TODO bindings
+        // console.log('onswiped',this.__onSwiped);
+        swiper.addEventListener('iron-swipe', this.__onSwiped);
+        
+        this.$.container.appendChild(swiper);
+        this.$[swiper.id] = swiper;
+        
+        var toast = document.createElement('paper-toast');
+        toast.id = 'toast';
+        
+        this.$.swiper.appendChild(toast);
+        this.$[toast.id] = toast;
+        
+        while (data.target.firstChild) {
+          toast.appendChild(data.target.firstChild);
+        }
       }
     });
   </script>
