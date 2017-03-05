@@ -1,9 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../paper-toast/paper-toast.html">
-<link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="../paper-styles/color.html">
-<link rel="import" href="../paper-styles/typography.html">
-<link rel="import" href="../iron-swipeable-container/iron-swipeable-container.html">
+<link rel="import" href="app-toast-swipeable.html">
 
 <!--
 `app-toasts`
@@ -65,28 +62,11 @@ Commonly used toasts are themed, swipeable, and actionable.
         color: var(--app-toasts-default-color);
       }
     </style>
-    <iron-swipeable-container id="swiper" on-iron-swipe="__onToastSwiped">
-      <paper-toast
-        id="successToast"
-        on-iron-overlay-closed="__onToastClosed">
-      </paper-toast>
-      <paper-toast
-        id="infoToast"
-        on-iron-overlay-closed="__onToastClosed">
-      </paper-toast>
-      <paper-toast
-        id="warningToast"
-        on-iron-overlay-closed="__onToastClosed">
-      </paper-toast>
-      <paper-toast
-        id="errorToast"
-        on-iron-overlay-closed="__onToastClosed">
-      </paper-toast>
-      <paper-toast
-        id="defaultToast"
-        on-iron-overlay-closed="__onToastClosed">
-      </paper-toast>
-    </iron-swipeable-container>
+    <app-toast-swipeable id="successToast"></app-toast-swipeable>
+    <app-toast-swipeable id="infoToast"></app-toast-swipeable>
+    <app-toast-swipeable id="warningToast"></app-toast-swipeable>
+    <app-toast-swipeable id="errorToast"></app-toast-swipeable>
+    <app-toast-swipeable id="defaultToast"></app-toast-swipeable>
   </template>
   <script>
     Polymer({
@@ -103,59 +83,44 @@ Commonly used toasts are themed, swipeable, and actionable.
         }
       },
 
-      showSuccessToast: function(text, duration, properties) {
+      showSuccessToast: function(text, properties) {
         text = text || 'Success';
         this.log && console.log('Toast:', text);
-        this.$.successToast.show(this._makeProperties(text, duration, properties));
-      },
-      showInfoToast: function(text, duration, properties) {
-        text = text || 'Info';
-        this.log && console.info('Toast:', text);
-        this.$.infoToast.show(this._makeProperties(text, duration, properties));
-      },
-      showWarningToast: function(text, duration, properties) {
-        text = text || 'Warning';
-        this.log && console.warn('Toast:', text);
-        this.$.warningToast.show(this._makeProperties(text, duration, properties));
-      },
-      showErrorToast: function(text, duration, properties) {
-        text = text || 'Error';
-        this.log && console.error('Toast:', text);
-        this.$.errorToast.show(this._makeProperties(text, duration, properties));
-      },
-      showDefaultToast: function(text, duration, properties) {
-        text = text || 'Default';
-        this.log && console.log('Toast:', text);
-        this.$.defaultToast.show(this._makeProperties(text, duration, properties));
-      },
-
-      _makeProperties: function(text, duration, properties) {
-        duration = duration || (duration === 0 ? 0 : 3000);
         properties = properties || {};
         properties.text = text;
-        properties.duration = duration;
-        return properties;
+        properties.icon = 'check-circle';
+        this.$.successToast.show(properties);
       },
-
-      _makeToast: function(id) {
-        var toast = document.createElement('paper-toast');
-        toast.id = id;
-        return toast;
+      showInfoToast: function(text, properties) {
+        text = text || 'Info';
+        this.log && console.info('Toast:', text);
+        properties = properties || {};
+        properties.text = text;
+        properties.icon = 'info';
+        this.$.infoToast.show(properties);
       },
-
-      __onToastSwiped: function(e, data) {
-        console.log('swiped:', data.target);
-        data.target.close();
-        var toast = this._makeToast(data.target.id);
-        Polymer.dom(this.$.swiper).appendChild(toast);
-        this.$[toast.id] = toast;
-        // console.log(this.$);
-        // data.target.style.opacity = 1;
+      showWarningToast: function(text, properties) {
+        text = text || 'Warning';
+        this.log && console.warn('Toast:', text);
+        properties = properties || {};
+        properties.text = text;
+        properties.icon = 'warning';
+        this.$.warningToast.show(properties);
       },
-
-      __onToastClosed: function(e, data) {
-        console.log('closed:', e.target);
-        // e.target.style.opacity = 1;
+      showErrorToast: function(text, properties) {
+        text = text || 'Error';
+        this.log && console.error('Toast:', text);
+        properties = properties || {};
+        properties.text = text;
+        properties.icon = 'error';
+        this.$.errorToast.show(properties);
+      },
+      showDefaultToast: function(text, properties) {
+        text = text || 'Default';
+        this.log && console.log('Toast:', text);
+        properties = properties || {};
+        properties.text = text;
+        this.$.defaultToast.show(properties);
       }
     });
   </script>

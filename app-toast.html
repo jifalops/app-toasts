@@ -1,0 +1,104 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-toast/paper-toast.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-styles/typography.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="toast-icons.html">
+<!--
+`app-toast`
+A swipeable, actionable, and themable.
+
+@demo demo/index.html
+-->
+
+<dom-module id="app-toast">
+  <template>
+    <style>
+      :host {
+        
+      }
+      iron-swipeable-container {
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
+        cursor: default;
+      }
+      paper-toast {
+        color: var(--app-toast-color);
+        --paper-toast-color: var(--app-toast-color);
+        background-color: var(--app-toast-bgcolor);
+        --paper-toast-background-color: var(--app-toast-bgcolor);
+        @apply --paper-font-body2;
+        @apply --app-toast;
+      }
+      paper-button {
+        @apply --app-toast-button;
+      }
+      #themeIcon {
+        @apply --app-toast-theme-icon;
+      }
+      #closeIcon {
+        @apply --app-toast-close-icon;
+      }
+    </style>
+    <paper-toast id="toast">
+      <iron-icon id="themeIcon" icon="toast-icons:[[icon]]"></iron-icon>
+      <span>[[text]]</span>
+      <paper-button id="actionButton">[[actionText]]</paper-button>
+      <iron-icon id="closeIcon" icon="toast-icons:close"></iron-icon>
+    </paper-toast>
+  </template>
+  <script>
+    Polymer({
+      is: 'app-toast',
+
+      properties: {
+        /**
+         * The icon to use from the toast-icons iconset.
+         */
+        icon: String,
+        
+        /**
+         * The toast's text.
+         */
+        text: String,
+        
+        /**
+         * The text of the action button.
+         */
+        actionText: String,
+        
+        showClose: {
+          type: Boolean,
+          value: false
+        },
+        
+        fitBottom: {
+          type: Boolean,
+          value: false
+        },
+        
+        onAction: Object,
+        onClose: Object
+      },
+
+      show: function(properties) {
+        if (properties) {
+          for (var property in properties) {
+            if (property in this && property.indexOf('_') === -1) {
+              this[property] = properties[property];
+              delete properties[property];
+            }
+          }
+        }
+        
+        this.$.themeIcon.hidden = !this.icon;
+        this.$.actionButton.hidden = !this.actionText;
+        this.$.closeIcon.hidden = !this.showClose;
+        
+        this.$.toast.show(properties);
+      }
+    });
+  </script>
+</dom-module>
