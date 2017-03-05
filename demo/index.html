@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>app-toasts demo</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="../../paper-button/paper-button.html">
+    <link rel="import" href="../app-toasts.html">
+
+    <style is="custom-style" include="demo-pages-shared-styles">
+    </style>
+  </head>
+  <body>
+    <div class="vertical-section-container centered">
+      <h3>Basic app-toasts demo</h3>
+      <demo-snippet>
+        <template is="dom-bind" id="ex1">
+          <app-toasts id="toasts"></app-toasts>
+          <paper-button raised on-tap="_showSuccessToast">Success</paper-button>
+          <paper-button raised on-tap="_showInfoToast">Info</paper-button>
+          <paper-button raised on-tap="_showWarningToast">Warning</paper-button>
+          <paper-button raised on-tap="_showErrorToast">Error</paper-button>
+          <paper-button raised on-tap="_showDefaultToast">Default</paper-button>
+          <script>
+            var ex1 = document.getElementById('ex1');
+            ex1._showSuccessToast = function() {
+              this.$.toasts.showSuccessToast();
+            };
+            ex1._showInfoToast = function() {
+              this.$.toasts.showInfoToast();
+            };
+            ex1._showWarningToast = function() {
+              this.$.toasts.showWarningToast();
+            };
+            ex1._showErrorToast = function() {
+              this.$.toasts.showErrorToast();
+            };
+            ex1._showDefaultToast = function() {
+              this.$.toasts.showDefaultToast();
+            };
+          </script>
+        </template>
+      </demo-snippet>
+    </div>
+  </body>
+</html>

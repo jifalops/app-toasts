@@ -1,0 +1,162 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-toast/paper-toast.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-styles/color.html">
+<link rel="import" href="../paper-styles/typography.html">
+<link rel="import" href="../iron-swipeable-container/iron-swipeable-container.html">
+
+<!--
+`app-toasts`
+Commonly used toasts are themed, swipeable, and actionable.
+
+@demo demo/index.html
+-->
+
+<dom-module id="app-toasts">
+  <template>
+    <style>
+      :host {
+        --app-toasts-font: {
+          @apply --paper-font-body2;
+        };
+        --app-toasts-success-color:   var(--paper-green-a700);
+        --app-toasts-success-bgcolor: var(--paper-green-50);
+        --app-toasts-info-color:      var(--paper-blue-a700);
+        --app-toasts-info-bgcolor:    var(--paper-blue-50);
+        --app-toasts-warning-color:   var(--paper-amber-a700);
+        --app-toasts-warning-bgcolor: var(--paper-amber-50);
+        --app-toasts-error-color:     var(--paper-deep-orange-a700);
+        --app-toasts-error-bgcolor:   var(--paper-deep-orange-50);
+      }
+      paper-toast {
+        @apply --app-toasts-font;
+      }
+      paper-button {
+        @apply --app-toasts-button;
+      }
+      #successToast {
+        --paper-toast-background-color: var(--app-toasts-success-bgcolor);
+        --paper-toast-color: var(--app-toasts-success-color);
+        background-color: var(--app-toasts-success-bgcolor);
+        color: var(--app-toasts-success-color);
+      }
+      #errorToast {
+        --paper-toast-background-color: var(--app-toasts-error-bgcolor);
+        --paper-toast-color: var(--app-toasts-error-color);
+        background-color: var(--app-toasts-error-bgcolor);
+        color: var(--app-toasts-error-color);
+      }
+      #infoToast {
+        --paper-toast-background-color: var(--app-toasts-info-bgcolor);
+        --paper-toast-color: var(--app-toasts-info-color);
+        background-color: var(--app-toasts-info-bgcolor);
+        color: var(--app-toasts-info-color);
+      }
+      #warningToast {
+        --paper-toast-background-color: var(--app-toasts-warning-bgcolor);
+        --paper-toast-color: var(--app-toasts-warning-color);
+        background-color: var(--app-toasts-warning-bgcolor);
+        color: var(--app-toasts-warning-color);
+      }
+      #defaultToast {
+        --paper-toast-background-color: var(--app-toasts-default-bgcolor);
+        --paper-toast-color: var(--app-toasts-default-color);
+        background-color: var(--app-toasts-default-bgcolor);
+        color: var(--app-toasts-default-color);
+      }
+    </style>
+    <iron-swipeable-container id="swiper" on-iron-swipe="__onToastSwiped">
+      <paper-toast
+        id="successToast"
+        on-iron-overlay-closed="__onToastClosed">
+      </paper-toast>
+      <paper-toast
+        id="infoToast"
+        on-iron-overlay-closed="__onToastClosed">
+      </paper-toast>
+      <paper-toast
+        id="warningToast"
+        on-iron-overlay-closed="__onToastClosed">
+      </paper-toast>
+      <paper-toast
+        id="errorToast"
+        on-iron-overlay-closed="__onToastClosed">
+      </paper-toast>
+      <paper-toast
+        id="defaultToast"
+        on-iron-overlay-closed="__onToastClosed">
+      </paper-toast>
+    </iron-swipeable-container>
+  </template>
+  <script>
+    Polymer({
+      is: 'app-toasts',
+
+      properties: {
+        /**
+         * Whether to log toasts to the console.
+         */
+        log: {
+          type: Boolean,
+          value: false,
+          reflectToAttribute: true
+        }
+      },
+
+      showSuccessToast: function(text, duration, properties) {
+        text = text || 'Success';
+        this.log && console.log('Toast:', text);
+        this.$.successToast.show(this._makeProperties(text, duration, properties));
+      },
+      showInfoToast: function(text, duration, properties) {
+        text = text || 'Info';
+        this.log && console.info('Toast:', text);
+        this.$.infoToast.show(this._makeProperties(text, duration, properties));
+      },
+      showWarningToast: function(text, duration, properties) {
+        text = text || 'Warning';
+        this.log && console.warn('Toast:', text);
+        this.$.warningToast.show(this._makeProperties(text, duration, properties));
+      },
+      showErrorToast: function(text, duration, properties) {
+        text = text || 'Error';
+        this.log && console.error('Toast:', text);
+        this.$.errorToast.show(this._makeProperties(text, duration, properties));
+      },
+      showDefaultToast: function(text, duration, properties) {
+        text = text || 'Default';
+        this.log && console.log('Toast:', text);
+        this.$.defaultToast.show(this._makeProperties(text, duration, properties));
+      },
+
+      _makeProperties: function(text, duration, properties) {
+        duration = duration || (duration === 0 ? 0 : 3000);
+        properties = properties || {};
+        properties.text = text;
+        properties.duration = duration;
+        return properties;
+      },
+
+      _makeToast: function(id) {
+        var toast = document.createElement('paper-toast');
+        toast.id = id;
+        return toast;
+      },
+
+      __onToastSwiped: function(e, data) {
+        console.log('swiped:', data.target);
+        data.target.close();
+        var toast = this._makeToast(data.target.id);
+        Polymer.dom(this.$.swiper).appendChild(toast);
+        this.$[toast.id] = toast;
+        // console.log(this.$);
+        // data.target.style.opacity = 1;
+      },
+
+      __onToastClosed: function(e, data) {
+        console.log('closed:', e.target);
+        // e.target.style.opacity = 1;
+      }
+    });
+  </script>
+</dom-module>
