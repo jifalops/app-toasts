@@ -3,8 +3,10 @@
 <link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="../paper-styles/typography.html">
 <link rel="import" href="../iron-icon/iron-icon.html">
-<link rel="import" href="../iron-swipeable-container/iron-swipeable-container.html">
+<!--<link rel="import" href="../iron-swipeable-container/iron-swipeable-container.html">-->
+<link rel="import" href="iron-swipeable-container2.html">
 <link rel="import" href="toast-icons.html">
+
 <!--
 `app-toast`
 A swipeable, actionable, and themable.
@@ -18,7 +20,7 @@ A swipeable, actionable, and themable.
       :host {
         
       }
-      iron-swipeable-container {
+      iron-swipeable-container2 {
         -moz-user-select: none;
         -ms-user-select: none;
         -webkit-user-select: none;
@@ -59,17 +61,17 @@ A swipeable, actionable, and themable.
     </style>
     
     <div id="container">
-      <!--<iron-swipeable-container-->
-        <!--id="swiper"-->
-        <!--disabled="[[disableSwipe]]"-->
-        <!--on-iron-swipe="__onSwiped">-->
-        <paper-toast id="toast">
-          <iron-icon id="themeIcon" icon="toast-icons:[[icon]]"></iron-icon>
+      <iron-swipeable-container2
+        id="swiper"
+        disabled="[[disableSwipe]]"
+        on-iron-swipe="__onSwiped">
+        <paper-toast id="toast" on-iron-overlay-close="__onToastClosed">
+          <iron-icon id="themeIcon" icon="toast-icons:[[icon]]" hidden$="[[!icon]]"></iron-icon>
           <span>[[text]]</span>
-          <paper-button id="actionButton" on-tap="_onAction">[[actionText]]</paper-button>
-          <iron-icon id="closeIcon" icon="toast-icons:close" on-tap="_onClose"></iron-icon>
+          <paper-button id="actionButton" on-tap="_onAction" hidden$="[[!actionText]]">[[actionText]]</paper-button>
+          <iron-icon id="closeIcon" icon="toast-icons:close" on-tap="_onClose" hidden$="[[!showClose]]"></iron-icon>
         </paper-toast>
-      <!--</iron-swipeable-container>-->
+      </iron-swipeable-container2>
     </div>
     
     
@@ -134,11 +136,7 @@ A swipeable, actionable, and themable.
           }
         }
         
-        this.querySelector('#themeIcon').hidden = !this.icon;
-        this.querySelector('#actionButton').hidden = !this.actionText;
-        this.querySelector('#closeIcon').hidden = !this.showClose;
-        
-        this.querySelector('#toast').show(properties);
+        this.$.toast.show(properties);
       },
       
       _onAction: function() {
@@ -160,30 +158,12 @@ A swipeable, actionable, and themable.
       
       __onSwiped: function(e, data) {
         // console.log('swiped:', data.target);
-        this.querySelector('#toast').close();
-        // this.querySelector('#swiper').re
-        // Remove the swipeable container,
-        // then add it and its children again.
-        this.$.container.removeChild(this.$.swiper);
-        
-        var swiper = document.createElement('iron-swipeable-container');
-        swiper.id = 'swiper';
-        swiper.disabled = this.disableSwipe; // TODO bindings
-        // console.log('onswiped',this.__onSwiped);
-        swiper.addEventListener('iron-swipe', this.__onSwiped);
-        
-        this.$.container.appendChild(swiper);
-        this.$[swiper.id] = swiper;
-        
-        var toast = document.createElement('paper-toast');
-        toast.id = 'toast';
-        
-        this.$.swiper.appendChild(toast);
-        this.$[toast.id] = toast;
-        
-        while (data.target.firstChild) {
-          toast.appendChild(data.target.firstChild);
-        }
+        this.$.toast.close();
+        this.$.toast.style.opacity = '1';
+      },
+      
+      __onClosed: function(e, data) {
+        this.$.toast.style.transform = 'translate3d(0, 0, 0) rotate(0)';
       }
     });
   </script>
