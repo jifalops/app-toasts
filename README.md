@@ -16,7 +16,7 @@ bower install --save app-toasts
 ## Demo
 <!--
 ```
-<custom-element-demo height="400">
+<custom-element-demo height="300">
   <template>
     <script src="../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="app-toasts.html">
