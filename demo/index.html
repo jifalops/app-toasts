@@ -10,7 +10,7 @@
 
     <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
     <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
-    <link rel="import" href="../../paper-button/paper-button.html">
+    <link rel="import" href="../app-toast.html">
     <link rel="import" href="../app-toasts.html">
 
     <style is="custom-style" include="demo-pages-shared-styles">
@@ -18,32 +18,156 @@
   </head>
   <body>
     <div class="vertical-section-container centered">
-      <h3>Basic app-toasts demo</h3>
+      <h3>app-toast (singular) demo</h3>
       <demo-snippet>
         <template is="dom-bind" id="ex1">
-          <app-toasts id="toasts"></app-toasts>
-          <paper-button raised on-tap="_showSuccessToast">Success</paper-button>
-          <paper-button raised on-tap="_showInfoToast">Info</paper-button>
-          <paper-button raised on-tap="_showWarningToast">Warning</paper-button>
-          <paper-button raised on-tap="_showErrorToast">Error</paper-button>
-          <paper-button raised on-tap="_showDefaultToast">Default</paper-button>
+          <app-toast id="toast"></app-toast>
+          <select id="icon">
+            <option>No icon</option>
+            <option selected>check-circle</option>
+            <option>check</option>
+            <option>check-box</option>
+            <option>info</option>
+            <option>info-outline</option>
+            <option>warning</option>
+            <option>error</option>
+            <option>error-outline</option>
+          </select><br/>
+          <input id="text" placeholder="text" value="text"/><br/>
+          <input id="duration" placeholder="duration (ms)" value="3000"/><br/>
+          <input id="actionText" placeholder="action button text" value="action"/><br/>
+          <label><input id="showCancel" type="checkbox"/>Show cancel</label><br/>
+          <label><input id="disableSwipe" type="checkbox"/>Disable swipe</label><br/>
+          <label><input id="fitBottom" type="checkbox"/>Fit to bottom</label><br/>
+          <button onclick="showToast()">Show</button>&nbsp;
+          <button onclick="showWithProperties()">Show with properties</button>&nbsp;
+          <button onclick="closeToast()">Close</button><br/>
+          Last Event: <span id="feedback"></span>
           <script>
-            var ex1 = document.getElementById('ex1');
-            ex1._showSuccessToast = function() {
-              this.$.toasts.showSuccessToast();
+            var toast = document.getElementById('toast');
+            var icon = document.getElementById('icon');
+            var text = document.getElementById('text');
+            var duration = document.getElementById('duration');
+            var actionText = document.getElementById('actionText');
+            var showCancel = document.getElementById('showCancel');
+            var disableSwipe = document.getElementById('disableSwipe');
+            var fitBottom = document.getElementById('fitBottom');
+            var feedback = document.getElementById('feedback');
+            function showToast() {
+              var tmp = icon.options[icon.selectedIndex].text;
+              toast.icon = tmp == 'No icon' ? '' : tmp;
+              toast.text = text.value;
+              toast.duration = Number(duration.value);
+              toast.actionText = actionText.value;
+              toast.showCancel = showCancel.checked;
+              toast.disableSwipe = disableSwipe.checked;
+              toast.fitBottom = fitBottom.checked;
+              toast.onAction = function() { feedback.innerText = "onAction()"; };
+              toast.onCancel = function() { feedback.innerText = "onCancel()"; };
+              toast.show();
+            }
+            function showWithProperties() {
+              var tmp = icon.options[icon.selectedIndex].text;
+              toast.show({
+                icon: tmp == 'No icon' ? '' : tmp,
+                text: text.value,
+                duration: Number(duration.value),
+                actionText: actionText.value,
+                showCancel: showCancel.checked,
+                disableSwipe: disableSwipe.checked,
+                fitBottom: fitBottom.checked,
+                onAction: function() { feedback.innerText = "onAction()"; },
+                onCancel: function() { feedback.innerText = "onCancel()"; }
+              });
+            }
+            function closeToast() {
+              toast.close();
+            }
+          </script>
+        </template>
+      </demo-snippet>
+
+      <h3>app-toasts (plural) demo</h3>
+      <demo-snippet>
+        <template is="dom-bind" id="ex2">
+          <style>
+            input {
+              width: 5em;
+            }
+          </style>
+          <app-toasts id="toasts"></app-toasts>
+          <app-toasts id="toasts2" intense></app-toasts>
+          <!-- <div>"Dark" colors are used as for the forground when
+            <code>intense</code> is set.</div>
+          <input id="color"           value="f1f1f1"/>Default color<br/>
+          <input id="colorDark"       value="f1f1f1"/>Default color dark<br/>
+          <input id="colorBg"         value="323232"/>Default background color<br/>
+          <input id="successColor"    value="00c853"/>Success color<br/>
+          <input id="successClorDark" value="1b5e20"/>Success color dark<br/>
+          <input id="successColorBg"  value="c8e6c9"/>Success background color<br/>
+          <input id="infoColor"       value="2962ff"/>Info color<br/>
+          <input id="infoClorDark"    value="0d47a1"/>Info color dark<br/>
+          <input id="infoColorBg"     value="bbdefb"/>Info background color<br/>
+          <input id="warningColor"    value="ffab00"/>Warning color<br/>
+          <input id="warningClorDark" value="ff6f00"/>Warning color dark<br/>
+          <input id="warningColorBg"  value="ffecb3"/>Warning background color<br/>
+          <input id="errorColor"      value="dd2c00"/>Error color<br/>
+          <input id="errorClorDark"   value="bf360c"/>Error color dark<br/>
+          <input id="errorColorBg"    value="ffccbc"/>Error background color<br/> -->
+          <label><input id="intense" type="checkbox"/>Intense coloring</label><br/><br/>
+          <button onclick="showSuccessToast()">Success</button>
+          <button onclick="showInfoToast()">Info</button>
+          <button onclick="showWarningToast()">Warning</button>
+          <button onclick="showErrorToast()">Error</button>
+          <button onclick="showDefaultToast()">Default</button>
+          <script>
+            var toasts = document.getElementById('toasts');
+            var toasts2 = document.getElementById('toasts2');
+            var intense = document.getElementById('intense');
+            function showSuccessToast() {
+              updateStyles();
+              if (intense.checked) toasts2.showSuccessToast();
+              else toasts.showSuccessToast();
             };
-            ex1._showInfoToast = function() {
-              this.$.toasts.showInfoToast();
+            function showInfoToast() {
+              updateStyles();
+              if (intense.checked) toasts2.showInfoToast();
+              else toasts.showInfoToast();
             };
-            ex1._showWarningToast = function() {
-              this.$.toasts.showWarningToast();
+            function showWarningToast() {
+              updateStyles();
+              if (intense.checked) toasts2.showWarningToast();
+              else toasts.showWarningToast();
             };
-            ex1._showErrorToast = function() {
-              this.$.toasts.showErrorToast();
+            function showErrorToast() {
+              updateStyles();
+              if (intense.checked) toasts2.showErrorToast();
+              else toasts.showErrorToast();
             };
-            ex1._showDefaultToast = function() {
-              this.$.toasts.showDefaultToast();
+            function showDefaultToast() {
+              updateStyles();
+              if (intense.checked) toasts2.showDefaultToast();
+              else toasts.showDefaultToast();
             };
+
+            function updateStyles() {
+              // toasts.customStyle['--app-toasts-color'] = '#' + document.getElementById('color').value;
+              // toasts.customStyle['--app-toasts-color-dark'] = '#' + document.getElementById('colorDark').value;
+              // toasts.customStyle['--app-toasts-bgcolor'] = '#' + document.getElementById('colorBg').value;
+              // toasts.customStyle['--app-toasts-success-color'] = '#' + document.getElementById('successColor').value;
+              // toasts.customStyle['--app-toasts-success-color-dark'] = '#' + document.getElementById('successClorDark').value;
+              // toasts.customStyle['--app-toasts-success-bgcolor'] = '#' + document.getElementById('successColorBg').value;
+              // toasts.customStyle['--app-toasts-info-color'] = '#' + document.getElementById('infoColor').value;
+              // toasts.customStyle['--app-toasts-info-color-dark'] = '#' + document.getElementById('infoClorDark').value;
+              // toasts.customStyle['--app-toasts-info-bgcolor'] = '#' + document.getElementById('infoColorBg').value;
+              // toasts.customStyle['--app-toasts-warning-color'] = '#' + document.getElementById('warningColor').value;
+              // toasts.customStyle['--app-toasts-warning-color-dark'] = '#' + document.getElementById('warningClorDark').value;
+              // toasts.customStyle['--app-toasts-warning-bgcolor'] = '#' + document.getElementById('warningColorBg').value;
+              // toasts.customStyle['--app-toasts-error-color'] = '#' + document.getElementById('errorColor').value;
+              // toasts.customStyle['--app-toasts-error-color-dark'] = '#' + document.getElementById('errorClorDark').value;
+              // toasts.customStyle['--app-toasts-error-bgcolor'] = '#' + document.getElementById('errorColorBg').value;
+              // toasts.updateStyles();
+            }
           </script>
         </template>
       </demo-snippet>

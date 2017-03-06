@@ -4,7 +4,25 @@
 
 <!--
 `app-toasts`
-Commonly used toasts are themed, swipeable, and actionable.
+Commonly used toasts that are themed, swipeable, and actionable.
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--app-toasts-color` | Default color | `--paper-toast-color`
+`--app-toasts-color-dark` | Default color when intense | `--paper-toast-color`
+`--app-toasts-bgcolor` | Default background color | `--paper-toast-background-color`
+`--app-toasts-success-color` | Success color | `--paper-green-a700`
+`--app-toasts-success-color-dark` | Success color when intense | `--paper-green-900`
+`--app-toasts-success-bgcolor` | Success background color | `--paper-green-100`
+`--app-toasts-info-color` | Info color | `--paper-blue-a700`
+`--app-toasts-info-color-dark` | Info color when intense | `--paper-blue-900`
+`--app-toasts-info-bgcolor` | Info background color | `--paper-blue-100`
+`--app-toasts-warning-color` | Warning color | `--paper-amber-a700`
+`--app-toasts-warning-color-dark` | Warning color when intense | `--paper-amber-900`
+`--app-toasts-warning-bgcolor` | Warning background color | `--paper-amber-100`
+`--app-toasts-error-color` | Error color | `--paper-deep-orange-a700`
+`--app-toasts-error-color-dark` | Error color when intense | `--paper-deep-orange-900`
+`--app-toasts-error-bgcolor` | Error background color | `--paper-deep-orange-100`
 
 @demo demo/index.html
 -->
@@ -13,34 +31,84 @@ Commonly used toasts are themed, swipeable, and actionable.
   <template>
     <style>
       :host {
-        --app-toasts-success-color:   var(--paper-green-a700);
-        --app-toasts-success-bgcolor: var(--paper-green-50);
-        --app-toasts-info-color:      var(--paper-blue-a700);
-        --app-toasts-info-bgcolor:    var(--paper-blue-50);
-        --app-toasts-warning-color:   var(--paper-amber-a700);
-        --app-toasts-warning-bgcolor: var(--paper-amber-50);
-        --app-toasts-error-color:     var(--paper-deep-orange-a700);
-        --app-toasts-error-bgcolor:   var(--paper-deep-orange-50);
+        --app-toasts-color:               var(--paper-toast-color);
+        --app-toasts-color-dark:          var(--paper-toast-color);
+        --app-toasts-bgcolor:             var(--paper-toast-background-color);
+        --app-toasts-success-color:       var(--paper-green-a700);
+        --app-toasts-success-color-dark:  var(--paper-green-900);
+        --app-toasts-success-bgcolor:     var(--paper-green-100);
+        --app-toasts-info-color:          var(--paper-blue-a700);
+        --app-toasts-info-color-dark:     var(--paper-blue-900);
+        --app-toasts-info-bgcolor:        var(--paper-blue-100);
+        --app-toasts-warning-color:       var(--paper-amber-a700);
+        --app-toasts-warning-color-dark:  var(--paper-amber-900);
+        --app-toasts-warning-bgcolor:     var(--paper-amber-100);
+        --app-toasts-error-color:         var(--paper-deep-orange-a700);
+        --app-toasts-error-color-dark:    var(--paper-deep-orange-900);
+        --app-toasts-error-bgcolor:       var(--paper-deep-orange-100);
       }
-      #successToast {
-        --app-toast-color: var(--app-toasts-success-color);
-        --app-toast-bgcolor: var(--app-toasts-success-bgcolor);
+
+      :host[intense] app-toast {
+        --app-toast: {
+          color: var(--app-toasts-color-dark);
+          background-color: var(--app-toasts-bgcolor);
+        };
       }
-      #infoToast {
-        --app-toast-color: var(--app-toasts-info-color);
-        --app-toast-bgcolor: var(--app-toasts-info-bgcolor);
+      :host:not([intense]) app-toast {
+        --app-toast-main-icon: {
+          color: var(--app-toasts-bgcolor);
+        };
+        --app-toast-main-icon-stroke-color: var(--app-toasts-color);
       }
-      #warningToast {
-        --app-toast-color: var(--app-toasts-warning-color);
-        --app-toast-bgcolor: var(--app-toasts-warning-bgcolor);
+
+
+      :host[intense] #successToast {
+        --app-toast: {
+          color: var(--app-toasts-success-color-dark);
+          background-color: var(--app-toasts-success-bgcolor);
+        };
       }
-      #errorToast {
-        --app-toast-color: var(--app-toasts-error-color);
-        --app-toast-bgcolor: var(--app-toasts-error-bgcolor);
+      :host:not([intense]) #successToast {
+        --app-toast-main-icon: {
+          color: var(--app-toasts-success-bgcolor);
+        };
+        --app-toast-main-icon-stroke-color: var(--app-toasts-success-color);
       }
-      #defaultToast {
-        --app-toast-color: var(--app-toasts-default-color);
-        --app-toast-bgcolor: var(--app-toasts-default-bgcolor);
+      :host[intense] #infoToast {
+        --app-toast: {
+          color: var(--app-toasts-info-color-dark);
+          background-color: var(--app-toasts-info-bgcolor);
+        };
+      }
+      :host:not([intense]) #infoToast {
+        --app-toast-main-icon: {
+          color: var(--app-toasts-info-bgcolor);
+        };
+        --app-toast-main-icon-stroke-color: var(--app-toasts-info-color);
+      }
+      :host[intense] #warningToast {
+        --app-toast: {
+          color: var(--app-toasts-warning-color-dark);
+          background-color: var(--app-toasts-warning-bgcolor);
+        };
+      }
+      :host:not([intense]) #warningToast {
+        --app-toast-main-icon: {
+          color: var(--app-toasts-warning-bgcolor);
+        };
+        --app-toast-main-icon-stroke-color: var(--app-toasts-warning-color);
+      }
+      :host[intense] #errorToast {
+        --app-toast: {
+          color: var(--app-toasts-error-color-dark);
+          background-color: var(--app-toasts-error-bgcolor);
+        };
+      }
+      :host:not([intense]) #errorToast {
+        --app-toast-main-icon: {
+          color: var(--app-toasts-error-bgcolor);
+        };
+        --app-toast-main-icon-stroke-color: var(--app-toasts-error-color);
       }
     </style>
     <app-toast id="successToast"></app-toast>
@@ -61,25 +129,23 @@ Commonly used toasts are themed, swipeable, and actionable.
           type: Boolean,
           value: false,
           reflectToAttribute: true
+        },
+        /**
+         * Whther to use more intense coloring.
+         */
+        intense: {
+          type: Boolean,
+          value: false,
+          reflectToAttribute: true
         }
       },
 
       showSuccessToast: function(text, properties) {
-        text = text || 'Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success Success ';
+        text = text || 'Success';
         this.log && console.log('Toast:', text);
         properties = properties || {};
         properties.text = text;
         properties.icon = 'check-circle';
-        properties.actionText = 'Undo';
-        properties.fitBottom = true;
-        properties.duration = 0;
-        properties.onAction = function() {
-          console.log('action!');
-        };
-        properties.showClose = true;
-        properties.onClose = function() {
-          console.log('close!');
-        };
         this.$.successToast.show(properties);
       },
       showInfoToast: function(text, properties) {
