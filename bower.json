@@ -1,6 +1,6 @@
 {
   "name": "app-toasts",
-  "description": "Commonly used toasts are themed, swipeable, and actionable.",
+  "description": "Commonly used toasts that are themed, swipeable, and actionable.",
   "main": "app-toasts.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0",
