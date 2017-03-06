@@ -20,7 +20,32 @@ bower install --save app-toasts
   <template>
     <script src="../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="app-toasts.html">
-    <next-code-block></next-code-block>   
+    <next-code-block></next-code-block>  
+    <script>
+      var toasts = document.getElementById('toasts');
+      var toasts2 = document.getElementById('toasts2');
+      var intense = document.getElementById('intense');
+      function showSuccessToast() {    
+        if (intense.checked) toasts2.showSuccessToast();
+        else toasts.showSuccessToast();
+      };
+      function showInfoToast() {    
+        if (intense.checked) toasts2.showInfoToast();
+        else toasts.showInfoToast();
+      };
+      function showWarningToast() {    
+        if (intense.checked) toasts2.showWarningToast();
+        else toasts.showWarningToast();
+      };
+      function showErrorToast() {  
+        if (intense.checked) toasts2.showErrorToast();
+        else toasts.showErrorToast();
+      };
+      function showDefaultToast() {    
+        if (intense.checked) toasts2.showDefaultToast();
+        else toasts.showDefaultToast();
+      };
+    </script> 
   </template>
 </custom-element-demo>
 ```
@@ -35,31 +60,6 @@ bower install --save app-toasts
 <button onclick="showWarningToast()">Warning</button>
 <button onclick="showErrorToast()">Error</button>
 <button onclick="showDefaultToast()">Default</button>
-<script>
-  var toasts = document.getElementById('toasts');
-  var toasts2 = document.getElementById('toasts2');
-  var intense = document.getElementById('intense');
-  function showSuccessToast() {    
-    if (intense.checked) toasts2.showSuccessToast();
-    else toasts.showSuccessToast();
-  };
-  function showInfoToast() {    
-    if (intense.checked) toasts2.showInfoToast();
-    else toasts.showInfoToast();
-  };
-  function showWarningToast() {    
-    if (intense.checked) toasts2.showWarningToast();
-    else toasts.showWarningToast();
-  };
-  function showErrorToast() {  
-    if (intense.checked) toasts2.showErrorToast();
-    else toasts.showErrorToast();
-  };
-  function showDefaultToast() {    
-    if (intense.checked) toasts2.showDefaultToast();
-    else toasts.showDefaultToast();
-  };
-</script>
 ```
 
 Full demo:
