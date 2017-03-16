@@ -1,8 +1,7 @@
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/jifalops/app-toasts)
 
 # app-toasts
-A swipeable, actionable, and themable paper-toast. Four pre-themed toasts are available:
-success, info, warning, and error.
+Success, error, info, and warning theme presets for app-toast.
 
 ## Installation
 ```
@@ -11,7 +10,6 @@ bower install --save app-toasts
 
 ## Usage
 * Drop `app-toasts` in and call one of the `show()` methods.
-* Or use `app-toast` directly.
 
 ## Demo
 <!--
@@ -45,7 +43,7 @@ bower install --save app-toasts
         if (intense.checked) toasts2.showDefaultToast();
         else toasts.showDefaultToast();
       };
-    </script> 
+    </script>
   </template>
 </custom-element-demo>
 ```

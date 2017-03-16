@@ -1,14 +1,11 @@
 {
   "name": "app-toasts",
-  "description": "Commonly used toasts are themed, swipeable, and actionable.",
+  "description": "Success, error, info, and warning theme presets for app-toast.",
   "main": "app-toasts.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0",
-    "paper-toast": "^1.3.0",
     "paper-styles": "^1.2.0",
-    "paper-button": "^1.0.14",
-    "iron-swipeable-container": "^1.0.3",
-    "iron-icon": "^1.0.12"
+    "app-toast": "^0.1.0"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
