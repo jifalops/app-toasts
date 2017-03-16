@@ -178,6 +178,17 @@ Custom property | Description | Default
         properties = properties || {};
         properties.text = text;
         this.$.defaultToast.show(properties);
+      },
+      
+      /**
+       * Close any open toasts.
+       */
+      close: function() {
+        this.$.successToast.close();
+        this.$.infoToast.close();
+        this.$.warningToast.close();
+        this.$.errorToast.close();
+        this.$.defaultToast.close();
       }
     });
   </script>
