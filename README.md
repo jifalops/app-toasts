@@ -10,6 +10,8 @@ bower install --save app-toasts
 
 ## Usage
 * Drop `app-toasts` in and call one of the `show()` methods.
+* Or use [app-toast](https://www.webcomponents.org/element/jifalops/app-toast)
+  directly.
 
 ## Demo
 <!--
