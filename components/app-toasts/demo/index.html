@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>app-toasts demo</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="../../app-toast/app-toast.html">
+    <link rel="import" href="../app-toasts.html">
+
+    <style is="custom-style" include="demo-pages-shared-styles">
+    </style>
+  </head>
+  <body>
+    <div class="vertical-section-container centered">
+      <h3>app-toasts demo</h3>
+      <demo-snippet>
+        <template is="dom-bind" id="ex2">
+          <app-toasts id="toasts"></app-toasts>
+          <app-toasts id="toasts2" intense></app-toasts>
+          <!-- <div>"Dark" colors are used as for the forground when
+            <code>intense</code> is set.</div>
+          <input id="color"           size="5" value="f1f1f1"/>Default color<br/>
+          <input id="colorDark"       size="5" value="f1f1f1"/>Default color dark<br/>
+          <input id="colorBg"         size="5" value="323232"/>Default background color<br/>
+          <input id="successColor"    size="5" value="00c853"/>Success color<br/>
+          <input id="successClorDark" size="5" value="1b5e20"/>Success color dark<br/>
+          <input id="successColorBg"  size="5" value="c8e6c9"/>Success background color<br/>
+          <input id="infoColor"       size="5" value="2962ff"/>Info color<br/>
+          <input id="infoClorDark"    size="5" value="0d47a1"/>Info color dark<br/>
+          <input id="infoColorBg"     size="5" value="bbdefb"/>Info background color<br/>
+          <input id="warningColor"    size="5" value="ffab00"/>Warning color<br/>
+          <input id="warningClorDark" size="5" value="ff6f00"/>Warning color dark<br/>
+          <input id="warningColorBg"  size="5" value="ffecb3"/>Warning background color<br/>
+          <input id="errorColor"      size="5" value="dd2c00"/>Error color<br/>
+          <input id="errorClorDark"   size="5" value="bf360c"/>Error color dark<br/>
+          <input id="errorColorBg"    size="5" value="ffccbc"/>Error background color<br/> -->
+          <input id="text2" placeholder="text" value="text"/><br/>
+          <input id="duration2" placeholder="duration (ms)" value="3000"/><br/>
+          <input id="actionText2" placeholder="action button text" value="action"/><br/>
+          <label><input id="showCancel2" type="checkbox"/>Show cancel</label><br/>
+          <label><input id="disableSwipe2" type="checkbox"/>Disable swipe</label><br/>
+          <label><input id="fitBottom2" type="checkbox"/>Fit to bottom</label><br/>
+          <label><input id="intense" type="checkbox"/>Intense coloring</label><br/><br/>
+          <button onclick="showSuccessToast()">Success</button>
+          <button onclick="showInfoToast()">Info</button>
+          <button onclick="showWarningToast()">Warning</button>
+          <button onclick="showErrorToast()">Error</button>
+          <button onclick="showDefaultToast()">Default</button>
+          <button onclick="closeToast2()">Close</button><br/>
+          Last Event: <span id="feedback2"></span>
+          <script>
+            var toasts = document.getElementById('toasts');
+            var toasts2 = document.getElementById('toasts2');
+            var intense = document.getElementById('intense');
+            var text2 = document.getElementById('text2');
+            var duration2 = document.getElementById('duration2');
+            var actionText2 = document.getElementById('actionText2');
+            var showCancel2 = document.getElementById('showCancel2');
+            var disableSwipe2 = document.getElementById('disableSwipe2');
+            var fitBottom2 = document.getElementById('fitBottom2');
+            var feedback2 = document.getElementById('feedback2');
+            function showSuccessToast() {
+              updateStyles();
+              if (intense.checked) toasts2.showSuccessToast(text2.value, _makeProperties());
+              else toasts.showSuccessToast(text2.value, _makeProperties());
+            }
+            function showInfoToast() {
+              updateStyles();
+              if (intense.checked) toasts2.showInfoToast(text2.value, _makeProperties());
+              else toasts.showInfoToast(text2.value, _makeProperties());
+            }
+            function showWarningToast() {
+              updateStyles();
+              if (intense.checked) toasts2.showWarningToast(text2.value, _makeProperties());
+              else toasts.showWarningToast(text2.value, _makeProperties());
+            }
+            function showErrorToast() {
+              updateStyles();
+              if (intense.checked) toasts2.showErrorToast(text2.value, _makeProperties());
+              else toasts.showErrorToast(text2.value, _makeProperties());
+            }
+            function showDefaultToast() {
+              updateStyles();
+              if (intense.checked) toasts2.showDefaultToast(text2.value, _makeProperties());
+              else toasts.showDefaultToast(text2.value, _makeProperties());
+            }
+            
+            function _makeProperties() {
+              return {
+                duration: Number(duration2.value),
+                actionText: actionText2.value,
+                showCancel: showCancel2.checked,
+                disableSwipe: disableSwipe2.checked,
+                fitBottom: fitBottom2.checked,
+                onAction: function() { feedback2.innerText = "onAction()"; },
+                onCancel: function() { feedback2.innerText = "onCancel()"; }
+              };
+            }
+            function closeToast2() {
+              toasts.close();
+              toasts2.close();
+            }
+            function updateStyles() {
+              // toasts.customStyle['--app-toasts-color'] = '#' + document.getElementById('color').value;
+              // toasts.customStyle['--app-toasts-color-dark'] = '#' + document.getElementById('colorDark').value;
+              // toasts.customStyle['--app-toasts-bgcolor'] = '#' + document.getElementById('colorBg').value;
+              // toasts.customStyle['--app-toasts-success-color'] = '#' + document.getElementById('successColor').value;
+              // toasts.customStyle['--app-toasts-success-color-dark'] = '#' + document.getElementById('successClorDark').value;
+              // toasts.customStyle['--app-toasts-success-bgcolor'] = '#' + document.getElementById('successColorBg').value;
+              // toasts.customStyle['--app-toasts-info-color'] = '#' + document.getElementById('infoColor').value;
+              // toasts.customStyle['--app-toasts-info-color-dark'] = '#' + document.getElementById('infoClorDark').value;
+              // toasts.customStyle['--app-toasts-info-bgcolor'] = '#' + document.getElementById('infoColorBg').value;
+              // toasts.customStyle['--app-toasts-warning-color'] = '#' + document.getElementById('warningColor').value;
+              // toasts.customStyle['--app-toasts-warning-color-dark'] = '#' + document.getElementById('warningClorDark').value;
+              // toasts.customStyle['--app-toasts-warning-bgcolor'] = '#' + document.getElementById('warningColorBg').value;
+              // toasts.customStyle['--app-toasts-error-color'] = '#' + document.getElementById('errorColor').value;
+              // toasts.customStyle['--app-toasts-error-color-dark'] = '#' + document.getElementById('errorClorDark').value;
+              // toasts.customStyle['--app-toasts-error-bgcolor'] = '#' + document.getElementById('errorColorBg').value;
+              // toasts.updateStyles();
+            }
+          </script>
+        </template>
+      </demo-snippet>
+    </div>
+  </body>
+</html>

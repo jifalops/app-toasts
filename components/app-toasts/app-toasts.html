@@ -1,0 +1,206 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-styles/color.html">
+<link rel="import" href="../app-toast/app-toast.html">
+
+<!--
+`app-toasts`
+Success, error, info, and warning theme presets for app-toast.
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--app-toasts-color` | Default color | `--paper-toast-color`
+`--app-toasts-color-dark` | Default color when intense | `--paper-toast-color`
+`--app-toasts-bgcolor` | Default background color | `--paper-toast-background-color`
+`--app-toasts-success-color` | Success color | `--paper-green-a700`
+`--app-toasts-success-color-dark` | Success color when intense | `--paper-green-900`
+`--app-toasts-success-bgcolor` | Success background color | `--paper-green-100`
+`--app-toasts-info-color` | Info color | `--paper-blue-a700`
+`--app-toasts-info-color-dark` | Info color when intense | `--paper-blue-900`
+`--app-toasts-info-bgcolor` | Info background color | `--paper-blue-100`
+`--app-toasts-warning-color` | Warning color | `--paper-amber-a700`
+`--app-toasts-warning-color-dark` | Warning color when intense | `--paper-amber-900`
+`--app-toasts-warning-bgcolor` | Warning background color | `--paper-amber-100`
+`--app-toasts-error-color` | Error color | `--paper-deep-orange-a700`
+`--app-toasts-error-color-dark` | Error color when intense | `--paper-deep-orange-900`
+`--app-toasts-error-bgcolor` | Error background color | `--paper-deep-orange-100`
+
+@demo demo/index.html
+-->
+
+<dom-module id="app-toasts">
+  <template>
+    <style>
+      :host {
+        --app-toasts-color:               var(--paper-toast-color);
+        --app-toasts-color-dark:          var(--paper-toast-color);
+        --app-toasts-bgcolor:             var(--paper-toast-background-color);
+        --app-toasts-success-color:       var(--paper-green-a700);
+        --app-toasts-success-color-dark:  var(--paper-green-900);
+        --app-toasts-success-bgcolor:     var(--paper-green-100);
+        --app-toasts-info-color:          var(--paper-blue-a700);
+        --app-toasts-info-color-dark:     var(--paper-blue-900);
+        --app-toasts-info-bgcolor:        var(--paper-blue-100);
+        --app-toasts-warning-color:       var(--paper-amber-a700);
+        --app-toasts-warning-color-dark:  var(--paper-amber-900);
+        --app-toasts-warning-bgcolor:     var(--paper-amber-100);
+        --app-toasts-error-color:         var(--paper-deep-orange-a700);
+        --app-toasts-error-color-dark:    var(--paper-deep-orange-900);
+        --app-toasts-error-bgcolor:       var(--paper-deep-orange-100);
+      }
+
+      :host[intense] app-toast {
+        --app-toast: {
+          color: var(--app-toasts-color-dark);
+          background-color: var(--app-toasts-bgcolor);
+        };
+      }
+      :host:not([intense]) app-toast {
+        --app-toast-main-icon: {
+          /*color: var(--app-toasts-bgcolor);*/
+        };
+        --app-toast-main-icon-stroke-color: var(--app-toasts-color);
+      }
+
+
+      :host[intense] #successToast {
+        --app-toast: {
+          color: var(--app-toasts-success-color-dark);
+          background-color: var(--app-toasts-success-bgcolor);
+        };
+      }
+      :host:not([intense]) #successToast {
+        --app-toast-main-icon: {
+          /*color: var(--app-toasts-success-bgcolor);*/
+        };
+        --app-toast-main-icon-stroke-color: var(--app-toasts-success-color);
+      }
+      :host[intense] #infoToast {
+        --app-toast: {
+          color: var(--app-toasts-info-color-dark);
+          background-color: var(--app-toasts-info-bgcolor);
+        };
+      }
+      :host:not([intense]) #infoToast {
+        --app-toast-main-icon: {
+          /*color: var(--app-toasts-info-bgcolor);*/
+        };
+        --app-toast-main-icon-stroke-color: var(--app-toasts-info-color);
+      }
+      :host[intense] #warningToast {
+        --app-toast: {
+          color: var(--app-toasts-warning-color-dark);
+          background-color: var(--app-toasts-warning-bgcolor);
+        };
+      }
+      :host:not([intense]) #warningToast {
+        --app-toast-main-icon: {
+          /*color: var(--app-toasts-warning-bgcolor);*/
+        };
+        --app-toast-main-icon-stroke-color: var(--app-toasts-warning-color);
+      }
+      :host[intense] #errorToast {
+        --app-toast: {
+          color: var(--app-toasts-error-color-dark);
+          background-color: var(--app-toasts-error-bgcolor);
+        };
+      }
+      :host:not([intense]) #errorToast {
+        --app-toast-main-icon: {
+          color: var(--app-toasts-error-bgcolor);
+        };
+        --app-toast-main-icon-stroke-color: var(--app-toasts-error-color);
+      }
+    </style>
+    <app-toast id="successToast"></app-toast>
+    <app-toast id="infoToast"></app-toast>
+    <app-toast id="warningToast"></app-toast>
+    <app-toast id="errorToast"></app-toast>
+    <app-toast id="defaultToast"></app-toast>
+  </template>
+  <script>
+    Polymer({
+      is: 'app-toasts',
+
+      properties: {
+        /**
+         * Whether to log toasts to the console too.
+         */
+        log: {
+          type: Boolean,
+          value: false,
+          reflectToAttribute: true
+        },
+        /**
+         * Whther to use more intense coloring.
+         */
+        intense: {
+          type: Boolean,
+          value: false,
+          reflectToAttribute: true
+        }
+      },
+
+      showSuccessToast: function(text, properties) {
+        text = text || 'Success';
+        this.log && console.log('Toast:', text);
+        properties = properties || {};
+        properties.text = text;
+        properties.icon = 'check-circle';
+        this.$.successToast.show(properties);
+      },
+      showInfoToast: function(text, properties) {
+        text = text || 'Info';
+        this.log && console.info('Toast:', text);
+        properties = properties || {};
+        properties.text = text;
+        properties.icon = 'info';
+        this.$.infoToast.show(properties);
+      },
+      showWarningToast: function(text, properties) {
+        text = text || 'Warning';
+        this.log && console.warn('Toast:', text);
+        properties = properties || {};
+        properties.text = text;
+        properties.icon = 'warning';
+        this.$.warningToast.show(properties);
+      },
+      showErrorToast: function(text, properties) {
+        text = text || 'Error';
+        this.log && console.error('Toast:', text);
+        properties = properties || {};
+        properties.text = text;
+        properties.icon = 'error';
+        this.$.errorToast.show(properties);
+      },
+      showDefaultToast: function(text, properties) {
+        text = text || 'Default';
+        this.log && console.log('Toast:', text);
+        properties = properties || {};
+        properties.text = text;
+        this.$.defaultToast.show(properties);
+      },
+
+      /**
+       * Close any open toasts.
+       */
+      close: function() {
+        this.$.successToast.close();
+        this.$.infoToast.close();
+        this.$.warningToast.close();
+        this.$.errorToast.close();
+        this.$.defaultToast.close();
+      },
+
+      /**
+       * Reset toasts' properties.
+       */
+      reset: function() {
+        this.$.successToast.reset();
+        this.$.infoToast.reset();
+        this.$.warningToast.reset();
+        this.$.errorToast.reset();
+        this.$.defaultToast.reset();
+      }
+    });
+  </script>
+</dom-module>
