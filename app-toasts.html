@@ -3,11 +3,8 @@
 <link rel="import" href="../app-toast/app-toast.html">
 
 <!--
-`app-toasts`
-Success, error, info, and warning theme presets for app-toast.
-
-Custom property | Description | Default
-----------------|-------------|----------
+CSS custom property | Description | Default
+------------------- | ----------- | -------
 `--app-toasts-color` | Default color | `--paper-toast-color`
 `--app-toasts-color-dark` | Default color when intense | `--paper-toast-color`
 `--app-toasts-bgcolor` | Default background color | `--paper-toast-background-color`
@@ -23,12 +20,10 @@ Custom property | Description | Default
 `--app-toasts-error-color` | Error color | `--paper-deep-orange-a700`
 `--app-toasts-error-color-dark` | Error color when intense | `--paper-deep-orange-900`
 `--app-toasts-error-bgcolor` | Error background color | `--paper-deep-orange-100`
-
-@demo demo/index.html
 -->
 
 <dom-module id="app-toasts">
-  <template>
+  <template strip-whitespace>
     <style>
       :host {
         --app-toasts-color:               var(--paper-toast-color);
@@ -52,13 +47,26 @@ Custom property | Description | Default
         --app-toast: {
           color: var(--app-toasts-color-dark);
           background-color: var(--app-toasts-bgcolor);
+          --paper-toast-color: var(--app-toasts-color-dark);
+          --paper-toast-background-color: var(--app-toasts-bgcolor);
         };
+        color: var(--app-toasts-color-dark);
+        background-color: var(--app-toasts-bgcolor);
+        --paper-toast-color: var(--app-toasts-color-dark);
+        --paper-toast-background-color: var(--app-toasts-bgcolor);
       }
       :host:not([intense]) app-toast {
-        --app-toast-main-icon: {
+        --app-toast-main-icon: {color:blue;
           /*color: var(--app-toasts-bgcolor);*/
         };
         --app-toast-main-icon-stroke-color: var(--app-toasts-color);
+
+        --app-toast: {
+          color: #999;
+          background-color: #333;
+          --paper-toast-color: #999;
+          --paper-toast-background-color: #333;
+        };
       }
 
 
@@ -118,25 +126,31 @@ Custom property | Description | Default
     <app-toast id="defaultToast"></app-toast>
   </template>
   <script>
+    /**
+     * `app-toasts`
+     * Success, error, info, and warning theme presets for app-toast.
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
     Polymer({
       is: 'app-toasts',
 
       properties: {
         /**
-         * Whether to log toasts to the console too.
+         * log toasts to the console too.
          */
         log: {
           type: Boolean,
-          value: false,
-          reflectToAttribute: true
+          value: false
         },
         /**
-         * Whther to use more intense coloring.
+         * Use more intense coloring.
          */
         intense: {
           type: Boolean,
-          value: false,
-          reflectToAttribute: true
+          value: false
         }
       },
 
