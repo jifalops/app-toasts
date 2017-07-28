@@ -26,93 +26,79 @@ CSS custom property | Description | Default
   <template strip-whitespace>
     <style>
       :host {
-        --app-toasts-color:               var(--paper-toast-color);
-        --app-toasts-color-dark:          var(--paper-toast-color);
-        --app-toasts-bgcolor:             var(--paper-toast-background-color);
-        --app-toasts-success-color:       var(--paper-green-a700);
-        --app-toasts-success-color-dark:  var(--paper-green-900);
-        --app-toasts-success-bgcolor:     var(--paper-green-100);
-        --app-toasts-info-color:          var(--paper-blue-a700);
-        --app-toasts-info-color-dark:     var(--paper-blue-900);
-        --app-toasts-info-bgcolor:        var(--paper-blue-100);
-        --app-toasts-warning-color:       var(--paper-amber-a700);
-        --app-toasts-warning-color-dark:  var(--paper-amber-900);
-        --app-toasts-warning-bgcolor:     var(--paper-amber-100);
-        --app-toasts-error-color:         var(--paper-deep-orange-a700);
-        --app-toasts-error-color-dark:    var(--paper-deep-orange-900);
-        --app-toasts-error-bgcolor:       var(--paper-deep-orange-100);
+        --app-toasts-color:               var(--paper-toast-color, #f1f1f1);
+        --app-toasts-color-dark:          var(--paper-toast-color, #f1f1f1);
+        --app-toasts-bgcolor:             var(--paper-toast-background-color, #323232);
+        --app-toasts-success-color:       var(--paper-green-a700, #00c853);
+        --app-toasts-success-color-dark:  var(--paper-green-900, #1b5e20);
+        --app-toasts-success-bgcolor:     var(--paper-green-100, #c8e6c9);
+        --app-toasts-info-color:          var(--paper-blue-a700, #2962ff);
+        --app-toasts-info-color-dark:     var(--paper-blue-900, #0d47a1);
+        --app-toasts-info-bgcolor:        var(--paper-blue-100, #bbdefb);
+        --app-toasts-warning-color:       var(--paper-amber-a700, #ffab00);
+        --app-toasts-warning-color-dark:  var(--paper-amber-900, #ff6f00);
+        --app-toasts-warning-bgcolor:     var(--paper-amber-100, #ffecb3);
+        --app-toasts-error-color:         var(--paper-deep-orange-a700, #dd2c00);
+        --app-toasts-error-color-dark:    var(--paper-deep-orange-900, #bf360c);
+        --app-toasts-error-bgcolor:       var(--paper-deep-orange-100, #ffccbc);
       }
 
-      :host[intense] app-toast {
+
+      :host([intense]) app-toast {
         --app-toast: {
           color: var(--app-toasts-color-dark);
           background-color: var(--app-toasts-bgcolor);
-          --paper-toast-color: var(--app-toasts-color-dark);
-          --paper-toast-background-color: var(--app-toasts-bgcolor);
         };
-        color: var(--app-toasts-color-dark);
-        background-color: var(--app-toasts-bgcolor);
-        --paper-toast-color: var(--app-toasts-color-dark);
-        --paper-toast-background-color: var(--app-toasts-bgcolor);
       }
-      :host:not([intense]) app-toast {
-        --app-toast-main-icon: {color:blue;
+      :host(:not([intense])) app-toast {
+        --app-toast-main-icon: {
           /*color: var(--app-toasts-bgcolor);*/
         };
         --app-toast-main-icon-stroke-color: var(--app-toasts-color);
-
-        --app-toast: {
-          color: #999;
-          background-color: #333;
-          --paper-toast-color: #999;
-          --paper-toast-background-color: #333;
-        };
       }
-
-
-      :host[intense] #successToast {
+      :host([intense]) #successToast {
         --app-toast: {
           color: var(--app-toasts-success-color-dark);
           background-color: var(--app-toasts-success-bgcolor);
         };
       }
-      :host:not([intense]) #successToast {
+      :host(:not([intense])) #successToast {
         --app-toast-main-icon: {
           /*color: var(--app-toasts-success-bgcolor);*/
         };
         --app-toast-main-icon-stroke-color: var(--app-toasts-success-color);
       }
-      :host[intense] #infoToast {
+      :host([intense]) #infoToast {
         --app-toast: {
           color: var(--app-toasts-info-color-dark);
           background-color: var(--app-toasts-info-bgcolor);
         };
       }
-      :host:not([intense]) #infoToast {
+      :host(:not([intense])) #infoToast {
         --app-toast-main-icon: {
           /*color: var(--app-toasts-info-bgcolor);*/
         };
         --app-toast-main-icon-stroke-color: var(--app-toasts-info-color);
       }
-      :host[intense] #warningToast {
+      :host([intense]) #warningToast {
         --app-toast: {
           color: var(--app-toasts-warning-color-dark);
           background-color: var(--app-toasts-warning-bgcolor);
         };
       }
-      :host:not([intense]) #warningToast {
+      :host(:not([intense])) #warningToast {
         --app-toast-main-icon: {
           /*color: var(--app-toasts-warning-bgcolor);*/
         };
         --app-toast-main-icon-stroke-color: var(--app-toasts-warning-color);
       }
-      :host[intense] #errorToast {
+      :host([intense]) #errorToast {
         --app-toast: {
           color: var(--app-toasts-error-color-dark);
           background-color: var(--app-toasts-error-bgcolor);
         };
       }
-      :host:not([intense]) #errorToast {
+      :host(:not([intense])) #errorToast {
         --app-toast-main-icon: {
           color: var(--app-toasts-error-bgcolor);
         };

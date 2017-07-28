@@ -5,7 +5,8 @@ Success, error, info, and warning theme presets for app-toast.
 
 ## Installation
 ```
-bower install --save app-toasts
+bower i -S app-toasts      # Polymer 2.0 hybrid (1.x compatible)
+bower i -S app-toasts#0.3  # Polymer 1.x based
 ```
 
 ## Usage
@@ -97,7 +98,6 @@ Full demo:
 | [github](https://jifalops.github.io/app-toasts/components/app-toasts/demo/).
 
 API: [webcomponents.org](https://www.webcomponents.org/element/jifalops/app-toasts/app-toasts)
-| [github](https://jifalops.github.io/app-toasts).
 
 ## Contributing
 
